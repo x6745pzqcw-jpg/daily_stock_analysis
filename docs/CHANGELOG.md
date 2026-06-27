@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- [新功能] 合并 stock_system 量化交易模块到 `src/quant/`，包含：ML 选股管线（特征工程 + LGB/XGB/CatBoost 集成训练）、缠论技术分析引擎、游资量价过滤器、唐朝价值投资验证器、ETF 选股器、QMT 交易接口（模拟/实盘）、ATR 动态止损管理器、硬规则风控系统、遗传算法参数进化引擎，以及同花顺/资金流/事件信号等数据模块。
+- [新功能] 新增 `/api/v1/ml-stock/*` API 端点，提供 ML 选股结果、ETF 筛选和行业板块资金流数据。
+- [新功能] Web 前端新增 ML 选股、ETF 筛选、板块拆解三个页面及侧边栏导航入口。
+- [chore] requirements.txt 追加 lightgbm/xgboost/catboost/scikit-learn/scipy/mootdx/matplotlib/plotly/python-docx 等量化依赖（均为可选）。
+- [chore] .env.example 追加缠论、规则风控、ML 选股、QMT 交易、同花顺、报告格式等配置段。
 - [修复] 将 Docker 可安装的 Longbridge SDK 版本固定为 0.2.75，避免 `longbridge>=0.2.77` 从包索引消失后导致 docker-build 失败。
 
 - [改进] Web 设置页新增首次启动配置检查卡，串联基础配置状态、自选股入口、模型配置入口和一次简短试跑。
@@ -48,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - [修复] 修复 Web 回测运行未传分析日期范围、股票代码未归一化导致后端成功返回但结果为空的问题，并为空候选和行情不足返回诊断信息。
 - [文档] 补充回测请求链路说明：`analysis_date_from/analysis_date_to` 与 `code` 的输入边界、归一化与筛选顺序，以及历史行情不足或候选集为空时回测返回成功响应，在 `message` 与 `diagnostics`（含 `empty_reason`）中提供可诊断信息，并同步更新 `docs/full-guide.md`、`docs/full-guide_EN.md` 示例。
 - [修复] 回测代码匹配新增非法市场后缀/长度兜底：如 `600519.HK`、`600519.SZ`、`SH000001` 不再静默回落到其它有效代码，并在日期筛选重跑时对齐旧回测结果的分析日期，避免历史快照日期命中但结果列表仍为空。
+- [修复] 修复根目录 `CLAUDE.md` 在工作区被错误写为普通文件导致 `ai-governance` CI 阻断，恢复为指向 `AGENTS.md` 的符号链接。
 
 ## [3.23.0] - 2026-06-20
 
